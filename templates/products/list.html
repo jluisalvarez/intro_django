@@ -1,0 +1,63 @@
+{% extends "base.html" %}
+
+{% block title %}
+<title>Segunda Mano</title>
+{% endblock %}
+    
+
+
+{% block content %} 
+<h1>Productos</h1>
+
+
+{%if not products %}
+    <p>No hay productos</p>
+{%else%}
+    {%for p in products %}
+        <p>[{{p.id}}] 
+            <a href="{%url 'details_product' p.id%}">{{p.name}}</a> - {{p.stock}}
+            <a href="{%url 'delete_product' p.id %}" onclick="return confirmar('{{p.id}}')">Delete</a>
+        </p>
+    {%endfor%}         
+{%endif%}
+
+
+{%if not products %}
+    <p>No hay productos</p>
+{%else%}
+<div class="container d-flex">
+    {%for p in products %}
+
+    <div class="card m-2 col-2">
+        <img  src="{{p.image.url}}" class="card-img-top" alt="{{p.name}}">
+        <div class="card-body">
+          <h5 class="card-title">{{p.name}}</h5>
+          <p class="card-text">Stock: {{p.stock}}</p>
+          <a href="{%url 'details_product' p.id %}" 
+             class="btn btn-info"
+            >Details</a>
+            <a href="{%url 'delete_product' p.id %}" 
+            class="btn btn-danger"
+            onclick="return confirmar('{{p.id}}')"
+           >Delete</a>
+           <a href="{%url 'like_product' p.id %}" 
+           class="btn btn-warning"
+          >Like</a>
+        </div>
+      </div>
+
+    {%endfor%}         
+{%endif%}
+</div>
+
+
+<script>
+    function confirmar(id) {
+      let ok = confirm("Do you delete Product #"+id+"?");
+      return ok
+  
+    }
+  </script>
+
+{% endblock%} 
+

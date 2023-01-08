@@ -1,0 +1,57 @@
+{% extends "base.html" %}
+
+{% block title %}
+<title>New Product</title>
+{% endblock %}
+
+{% block content %} 
+<h1>New Product</h1>
+
+<form method="POST" enctype="multipart/form-data">
+    {% csrf_token %}
+
+    <div class="form-group mt-2">
+        <input
+            class="form-control {% if form.name.errors %}is-invalid{% endif %}"
+            type="text"
+            name="name"
+            placeholder="Name"
+            value="{%if form.name.value != None %}{{form.name.value}}{%endif%}"
+        >
+        <div class="invalid-feedback">
+            {% for error in form.name.errors %}{{ error }}{% endfor %}
+        </div>
+    </div>
+
+    <div class="form-group mt-2">
+        <input
+            class="form-control {% if form.stock.errors %}is-invalid{% endif %}"
+            type="text"
+            name="stock"
+            placeholder="Stock"
+            value="{%if form.stock.value != None %}{{form.stock.value}}{%endif%}"
+        >
+        <div class="invalid-feedback">
+            {% for error in form.stock.errors %}{{ error }}{% endfor %}
+        </div>
+    </div>
+
+
+    <div class="form-group mt-2">
+        <label>Choose Imagen:</label>
+        <input
+            class="form-control {% if form.image.errors %}is-invalid{% endif %}"
+            type="file"
+            name="image"
+            placeholder="Imagen"
+        >
+        <p>Actual: {{form.image.value}} </p>
+        <div class="invalid-feedback">
+            {% for error in form.image.errors %}{{ error }}{% endfor %}
+        </div>
+    </div>
+
+    <button type="submit" class="btn btn-primary btn-block mt-5">Publish!</button>
+</form>
+
+{% endblock%} 
